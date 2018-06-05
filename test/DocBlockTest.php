@@ -224,4 +224,43 @@ other declarations (which may be documented elsewhere).');
         $this->assertEquals($expect, $output);
     }
 
+    public function testDocBlockGenerator()
+    {
+        /*
+        $docBlockGenerator = new DocBlockGenerator();
+        $docBlockGenerator->setIndentation('    ');
+        $docBlockGenerator->setName('MyWidget');
+        $docBlockGenerator->setLicence('This program is free software');
+        $docBlockGenerator->setWrapword(True);
+        $docBlockGenerator->setScopes(array('source', 'header', 'types'));
+        $docBlockGenerator->setScopes(array('source', 'header'));
+        $docBlockGenerator->setScopes(array('source'));
+
+        $programDocBlock = $docBlockGenerator->create('program');
+        $programDocBlock->generate('header|source|types');
+
+        $programDocBlock = $docBlockGenerator->create('file');
+        $programDocBlock->generate('header|source|types');
+
+        $programDocBlock = $docBlockGenerator->create('object');
+        $programDocBlock->generate('header|source|types');
+
+        $programDocBlock = $docBlockGenerator->create('struct');
+        $programDocBlock->generate('header|source|types');
+
+        $programDocBlock = $docBlockGenerator->create('function|method');
+        $programDocBlock->generate('header|source|types');
+
+        $programDocBlock = $docBlockGenerator->create('[child-]property');
+        $programDocBlock->generate('header|source|types');
+
+        $programDocBlock = $docBlockGenerator->create('signal');
+        $programDocBlock->generate('header|source|types');
+
+        $programDocBlock = $docBlockGenerator->create('style');
+        $programDocBlock->generate('header|source|types');
+        */
+
+    }
+
 }
