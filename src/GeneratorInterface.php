@@ -11,5 +11,5 @@ namespace Zend\GLib;
 
 interface GeneratorInterface
 {
-    public function generate();
+    public function generate($scope);
 }

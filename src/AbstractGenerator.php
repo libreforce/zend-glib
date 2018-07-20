@@ -33,7 +33,15 @@ abstract class AbstractGenerator implements GeneratorInterface
     protected $wordwrap = true;
     protected $author = 'NoName';
     protected $email = 'no-name@mail.net';
-    protected $object = '';
+
+    /**
+     * AbstractGenerator
+     */
+    protected $parentGenerator;
+    /*
+     *
+     */
+    protected $nameFilter;
 
     /**
      * @param  array $options
@@ -61,6 +69,24 @@ abstract class AbstractGenerator implements GeneratorInterface
     public function getIndentation()
     {
         return $this->indentation;
+    }
+
+    /**
+     * @param  AbstractGenerator $parentGenerator
+     * @return AbstractGenerator
+     */
+    public function setParentGenerator($parentGenerator)
+    {
+        $this->parentGenerator = $parentGenerator;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParentGenerator()
+    {
+        return $this->parentGenerator;
     }
 
     /**

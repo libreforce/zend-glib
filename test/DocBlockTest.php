@@ -224,9 +224,9 @@ other declarations (which may be documented elsewhere).');
         $this->assertEquals($expect, $output);
     }
 
+        /*
     public function testDocBlockGenerator()
     {
-        /*
         $docBlockGenerator = new DocBlockGenerator();
         $docBlockGenerator->setIndentation('    ');
         $docBlockGenerator->setName('MyWidget');
@@ -259,8 +259,8 @@ other declarations (which may be documented elsewhere).');
 
         $programDocBlock = $docBlockGenerator->create('style');
         $programDocBlock->generate('header|source|types');
-        */
 
     }
+        */
 
 }

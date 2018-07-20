@@ -1,0 +1,12 @@
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         >
+  <testsuites>
+    <testsuite name="My Test Suite">
+      <directory suffix="Test.php">test</directory>
+      <exclude>test/generator</exclude>
+    </testsuite>
+  </testsuites>
+</phpunit>
+
+

@@ -15,6 +15,8 @@ namespace Zend\GLib;
 //use Zend\Code\Reflection\DocBlockReflection;
 use \Zend\GLib\AbstractGenerator;
 
+use \Zend\GLib\TypeGenerator;
+
 use function explode;
 use function is_array;
 use function sprintf;
@@ -28,22 +30,29 @@ class ParameterGenerator extends AbstractGenerator
 {
 
     /**
-     * @var bool
+     * @var string
      */
-     protected $name;
-     protected $type;
-     protected $qualifier;
-     protected $modifier;
-     protected $pass;
-     protected $isArray=False;
-     protected $expression;
-     protected $isVariadic=False;
+    protected $name;
+    /**
+     * @var TypeGenerator
+     */
+    protected $type;
+    /**
+     * @var boolean
+     */
+    protected $isVariadic=False;
 
     /**
      *
      */
-    public function __construct()
+    public function __construct($options)
     {
+        if (is_string($options)) {
+            $this->setName($options);
+        }
+        if (is_array($options)) {
+            $this->setOptions($options);
+        }
     }
 
     public function setName($name)
@@ -59,59 +68,17 @@ class ParameterGenerator extends AbstractGenerator
 
     public function setType($type)
     {
-        $this->type = $type;
+        if ($type instanceof TypeGenerator) {
+            $this->type = $type;
+        } else if (is_string($type)) {
+            $this->type = new TypeGenerator($type);
+        }
         return $this;
     }
 
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * signed
-     * unsigned
-     * short
-     * long
-     */
-    public function setModifier($modifier)
-    {
-        $this->modifier = $modifier;
-        return $this;
-    }
-
-    public function getModifier()
-    {
-        return $this->modifier;
-    }
-
-    /**
-     * const
-     */
-    public function setQualifier($qualifier)
-    {
-        $this->qualifier = $qualifier;
-        return $this;
-    }
-
-    public function getQualifier()
-    {
-        return $this->qualifier;
-    }
-
-    /**
-     * *
-     * &
-     */
-    public function setPass($pass)
-    {
-        $this->pass = $pass;
-        return $this;
-    }
-
-    public function getPass()
-    {
-        return $this->pass;
     }
 
     public function setVariadic($isVariadic=true)
@@ -125,55 +92,28 @@ class ParameterGenerator extends AbstractGenerator
         return $this->isVariadic;
     }
 
-    public function setArray($isArray=True, $expression=null)
-    {
-        $this->isArray = $isArray;
-        $this->expression = $expression;
-        return $this;
-    }
-
-    public function getArray()
-    {
-        return $this->expression;
-    }
-
-    public function isArray()
-    {
-        return $this->isArray;
-    }
-
-
     /**
      * @return string
      */
-    public function generate()
+    public function generate($scope)
     {
         $output = '';// const unsigned char *argv[]
+        $naming = new Naming\GnomeStrategy();
+        $function_name = $naming->generateFunctionName($this);
 
         if ($this->isVariadic()) {
             return '...';
         }
 
-        if ($this->qualifier!=null) {
-            $output .= $this->getQualifier() . ' ';
-        }
+        $output .= $this->getType()->generate($scope);
 
-        if ($this->modifier!=null) {
-            $output .= $this->getModifier() . ' ';
-        }
+        $output .= ' ' . $function_name;
 
-        $output .= $this->getType();
-
-        if ($this->pass!=null) {
-            $output .= $this->getPass() . ' ';
-        }
-
-        $output .= $this->getName();
-
-        if ($this->isArray()) {
+        if ($this->getType()->isArray()) {
             $output .= '[';
-            if ($this->expression!=NULL) {
-                $output .= $this->expression;
+            $expression = $this->getType()->getExpressionArray();
+            if ($expression!=NULL) {
+                $output .= $expression;
             }
             $output .= ']';
         }

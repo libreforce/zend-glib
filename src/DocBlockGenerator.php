@@ -62,7 +62,7 @@ class DocBlockGenerator extends AbstractGenerator
     /**
      * @return string
      */
-    public function generate()
+    public function generate($scope)
     {
     }
 
